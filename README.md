@@ -4,8 +4,9 @@
 
 [TOC]
 
-##Quick Setup (using React UI)
-####📲Install
+## Quick Setup (using React UI)
+
+#### 📲Install
 
 Install these dependencies:
 
