@@ -67,7 +67,7 @@ function constructMissingProviderErrorMessage(action: string, valueName: string)
     )
 }
 
-export const WalletContext = createContext<WalletContextState>(
+export const WalletContext: any = createContext<WalletContextState>(
     DEFAULT_CONTEXT as WalletContextState,
 )
 

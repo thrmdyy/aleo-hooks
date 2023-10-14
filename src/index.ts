@@ -1,2 +1,2 @@
 export { WalletProvider } from './components'
-export { useConnect, useDisconnect, useSelect, useWallet } from './hooks'
+export { useConnect, useDisconnect, useSelect, useDecrypt, useViewKey } from './hooks'

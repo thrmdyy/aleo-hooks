@@ -20,7 +20,7 @@ export const useDecrypt = ({
 }) => {
     const [decryptedText, setDecryptedText] = useState<string | null>(null)
     const [loading, setLoading] = useState<boolean>(true)
-    const [error, setError] = useState<unknown>(null)
+    const [error, setError] = useState(null)
     const { adapter, connected } = useWallet()
 
     const decrypt = useCallback(async () => {
@@ -50,7 +50,7 @@ export const useDecrypt = ({
 
                 setDecryptedText(decryptedText)
             }
-        } catch (error) {
+        } catch (error: any) {
             setError(error)
         } finally {
             setLoading(false)

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { useWallet } from '.'
+import { useWallet } from './useWallet'
 import {
     WalletError,
     WalletNotConnectedError,
@@ -10,7 +10,7 @@ export const useViewKey = () => {
     const { adapter, connected } = useWallet()
     const [viewKey, setViewKey] = useState<string | null>(null)
     const [loading, setLoading] = useState<boolean>(true)
-    const [error, setError] = useState<unknown>(null)
+    const [error, setError] = useState(null)
 
     const requestViewKey = useCallback(async () => {
         setLoading(true)
@@ -35,7 +35,7 @@ export const useViewKey = () => {
             } else {
                 throw new WalletError('Not implemented')
             }
-        } catch (error) {
+        } catch (error: any) {
             setError(error)
         } finally {
             setLoading(false)
