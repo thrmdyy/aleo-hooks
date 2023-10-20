@@ -158,12 +158,12 @@ import { useDisconnect } from 'aleo-hooks'
 export const UseDisconnect: FC = () => {
     const { disconnect, disconnecting, error } = useDisconnect()
 
-    const selectHandler = () => disconnect()
+    const disconnectHandler = () => disconnect()
 
     return (
         <div>
             {error && <p>Something went wrong {JSON.stringify(error)}</p>}
-            <button disabled={disconnecting} onClick={selectHandler}>disconnect</button>
+            <button disabled={disconnecting} onClick={disconnectHandler}>disconnect</button>
         </div>
     )
 }
