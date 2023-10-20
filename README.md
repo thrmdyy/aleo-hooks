@@ -11,7 +11,7 @@
 Install these dependencies:
 
 ```javascript
-npm install --save aleo-hooks @demox-labs/aleo-wallet-adapter-leo
+npm install aleo-hooks @demox-labs/aleo-wallet-adapter-leo
 ```
 
 #### 🛠️Setup

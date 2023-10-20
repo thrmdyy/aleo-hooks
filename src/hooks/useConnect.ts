@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { useWallet } from './useWallet'
 import {
     WalletName,
@@ -19,6 +19,7 @@ export const useConnect = () => {
         network,
         programs,
         wallets,
+        publicKey,
     } = useWallet()
     const [error, setError] = useState(null)
 
@@ -63,5 +64,8 @@ export const useConnect = () => {
         [connecting, disconnecting, connected, wallets, handleError, setSelectedWalletName],
     )
 
-    return { connected, connecting, connect, error }
+    return useMemo(
+        () => ({ connected, connecting, connect, error, address: publicKey }),
+        [connected, connecting, connect, error, publicKey],
+    )
 }

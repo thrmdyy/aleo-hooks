@@ -1,5 +1,5 @@
 import { useWallet } from './useWallet'
-import { useCallback, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 
 export const useDisconnect = () => {
     const { disconnecting, setDisconnecting, adapter, setSelectedWalletName } = useWallet()
@@ -23,5 +23,5 @@ export const useDisconnect = () => {
         }
     }, [disconnecting, adapter, setSelectedWalletName])
 
-    return { disconnect, disconnecting, error }
+    return useMemo(() => ({ disconnect, disconnecting, error }), [disconnect, disconnecting, error])
 }

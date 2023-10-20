@@ -3,7 +3,7 @@ import {
     WalletNotSelectedError,
 } from '@demox-labs/aleo-wallet-adapter-base'
 import { useWallet } from './useWallet'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 
 export const useDecrypt = ({
     cipherText,
@@ -28,9 +28,6 @@ export const useDecrypt = ({
         setError(null)
 
         try {
-            // if (!connected) throw handleError(new WalletNotConnectedError())
-            // if (!adapter) throw handleError(new WalletNotSelectedError())
-
             if (!connected) {
                 throw new WalletNotConnectedError()
             }
@@ -61,5 +58,5 @@ export const useDecrypt = ({
         decrypt()
     }, [cipherText, tpk, programId, functionName, index])
 
-    return { decryptedText, loading, error }
+    return useMemo(() => ({ decryptedText, loading, error }), [decryptedText, loading, error])
 }

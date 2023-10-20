@@ -1,39 +1,40 @@
-import type { Dispatch, SetStateAction } from 'react';
-import { useEffect, useRef, useState } from 'react';
+import type { Dispatch, SetStateAction } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 export function useLocalStorage<T>(key: string, defaultState: T): [T, Dispatch<SetStateAction<T>>] {
     const state = useState<T>(() => {
         try {
-            const value = localStorage.getItem(key);
-            if (value) return JSON.parse(value) as T;
+            const value = localStorage.getItem(key)
+            if (value) return JSON.parse(value) as T
         } catch (error: any) {
             if (typeof window !== 'undefined') {
-                console.error(error);
+                console.error(error)
             }
         }
 
-        return defaultState;
-    });
-    const value = state[0];
+        return defaultState
+    })
+    const value = state[0]
 
-    const isFirstRender = useRef(true);
+    const isFirstRender = useRef(true)
+
     useEffect(() => {
         if (isFirstRender.current) {
-            isFirstRender.current = false;
-            return;
+            isFirstRender.current = false
+            return
         }
         try {
             if (value === null) {
-                localStorage.removeItem(key);
+                localStorage.removeItem(key)
             } else {
-                localStorage.setItem(key, JSON.stringify(value));
+                localStorage.setItem(key, JSON.stringify(value))
             }
         } catch (error: any) {
             if (typeof window !== 'undefined') {
-                console.error(error);
+                console.error(error)
             }
         }
-    }, [value, key]);
+    }, [value, key])
 
-    return state;
+    return state
 }

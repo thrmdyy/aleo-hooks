@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useWallet } from './useWallet'
 import {
     WalletError,
@@ -17,9 +17,6 @@ export const useViewKey = () => {
         setError(null)
 
         try {
-            // if (!connected) throw handleError(new WalletNotConnectedError())
-            // if (!adapter) throw handleError(new WalletNotSelectedError())
-
             if (!connected) {
                 throw new WalletNotConnectedError()
             }
@@ -46,5 +43,8 @@ export const useViewKey = () => {
         requestViewKey()
     }, [])
 
-    return { viewKey, loading, error, requestViewKey }
+    return useMemo(
+        () => ({ viewKey, loading, error, requestViewKey }),
+        [viewKey, loading, error, requestViewKey],
+    )
 }
