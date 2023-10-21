@@ -11,15 +11,17 @@ export const useDecrypt = ({
     programId,
     functionName,
     index,
+    enabled = true,
 }: {
     cipherText: string
     tpk?: string
     programId?: string
     functionName?: string
     index?: number
+    enabled?: boolean
 }) => {
     const [decryptedText, setDecryptedText] = useState<string | null>(null)
-    const [loading, setLoading] = useState<boolean>(true)
+    const [loading, setLoading] = useState<boolean>(enabled)
     const [error, setError] = useState(null)
     const { adapter, connected } = useWallet()
 
@@ -52,11 +54,16 @@ export const useDecrypt = ({
         } finally {
             setLoading(false)
         }
-    }, [cipherText, tpk, programId, functionName, index])
+    }, [connected, adapter, cipherText, tpk, programId, functionName, index])
 
     useEffect(() => {
-        decrypt()
-    }, [cipherText, tpk, programId, functionName, index])
+        if (enabled) {
+            decrypt()
+        }
+    }, [decrypt, enabled])
 
-    return useMemo(() => ({ decryptedText, loading, error }), [decryptedText, loading, error])
+    return useMemo(
+        () => ({ decryptedText, loading, error, decrypt }),
+        [decryptedText, loading, error, decrypt],
+    )
 }

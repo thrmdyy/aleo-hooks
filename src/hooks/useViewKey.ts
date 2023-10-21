@@ -6,11 +6,11 @@ import {
     WalletNotSelectedError,
 } from '@demox-labs/aleo-wallet-adapter-base'
 
-export const useViewKey = () => {
+export const useViewKey = ({ enabled }: { enabled: boolean } = { enabled: true }) => {
     const { adapter, connected } = useWallet()
     const [viewKey, setViewKey] = useState<string | null>(null)
-    const [loading, setLoading] = useState<boolean>(true)
-    const [error, setError] = useState(null)
+    const [loading, setLoading] = useState<boolean>(enabled)
+    const [error, setError] = useState<null | Error>(null)
 
     const requestViewKey = useCallback(async () => {
         setLoading(true)
@@ -30,18 +30,20 @@ export const useViewKey = () => {
 
                 setViewKey(viewKey)
             } else {
-                throw new WalletError('Not implemented')
+                throw new WalletError('Not implemented in your wallet provider')
             }
         } catch (error: any) {
             setError(error)
         } finally {
             setLoading(false)
         }
-    }, [])
+    }, [connected, adapter])
 
     useEffect(() => {
-        requestViewKey()
-    }, [])
+        if (enabled) {
+            requestViewKey()
+        }
+    }, [requestViewKey])
 
     return useMemo(
         () => ({ viewKey, loading, error, requestViewKey }),
