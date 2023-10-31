@@ -5,6 +5,15 @@ import {
 import { useWallet } from './useWallet'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
+interface IUseDecryptArguments {
+    cipherText: string
+    tpk?: string
+    programId?: string
+    functionName?: string
+    index?: number
+    enabled?: boolean
+}
+
 export const useDecrypt = ({
     cipherText,
     tpk,
@@ -12,14 +21,7 @@ export const useDecrypt = ({
     functionName,
     index,
     enabled = true,
-}: {
-    cipherText: string
-    tpk?: string
-    programId?: string
-    functionName?: string
-    index?: number
-    enabled?: boolean
-}) => {
+}: IUseDecryptArguments) => {
     const [decryptedText, setDecryptedText] = useState<string | null>(null)
     const [loading, setLoading] = useState<boolean>(enabled)
     const [error, setError] = useState(null)
